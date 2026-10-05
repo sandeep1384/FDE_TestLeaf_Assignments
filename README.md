@@ -38,6 +38,9 @@ The program demonstrates the following Python concepts:
 
 ## 📂 Project Structure
 
+## 📂 Project Structure
+
+```text
 FDE_TestLeaf_Assignments/
 │
 ├── .venv/
