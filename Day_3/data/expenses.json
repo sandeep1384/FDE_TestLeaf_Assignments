@@ -1,0 +1,56 @@
+   [ { 
+        "id": 1,
+        "vendor": "Amazon",
+        "amount": 2500.00,
+        "category": "Office Supplies",
+        "status": "Pending"
+    },
+    {
+        "id": 2,
+        "vendor": "MakeMyTrip",
+        "amount": 15000.00,
+        "category": "Travel",
+        "status": "Pending"
+    },
+    {
+        "id": 3,
+        "vendor": "",
+        "amount": 5000.00,
+        "category": "Travel",
+        "status": "INVALID"
+    },
+    {
+        "id": 4,
+        "amount": 1200.00,
+        "category": "Food",
+        "status": "INVALID"
+    },
+    {
+        "id": 5,
+        "vendor": "Uber",
+        "amount": 800.00,
+        "category": "Transport",
+        "status": "Pending"
+    },
+    {
+        "id": 6,
+        "vendor": "Dell",
+        "amount": 85000.00,
+        "category": "Equipment",
+        "status": "Pending"
+    },
+    {
+        "id": 7,
+        "vendor": "Taj Hotels",
+        "amount": 12000.00,
+        "category": "Accommodation",
+        "status": "Pending"
+    },
+    {
+        "id": 8,
+        "vendor": "Office Depot",
+        "amount": 500.00,
+        "category": "Office Supplies",
+        "status": "Pending"
+    }
+   ]
