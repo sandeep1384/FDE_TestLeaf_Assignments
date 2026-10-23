@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add Patient Encounter</title>
+    <style>
+      body {
+        color: #222;
+        font-family: Arial, sans-serif;
+        margin: 2rem auto;
+        max-width: 48rem;
+        padding: 0 1rem;
+      }
+
+      form {
+        background: #f9f9f9;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+        padding: 1rem;
+      }
+
+      label {
+        display: grid;
+        gap: 0.35rem;
+      }
+
+      input,
+      select,
+      button {
+        box-sizing: border-box;
+        font: inherit;
+        max-width: 100%;
+        padding: 0.6rem;
+      }
+
+      button {
+        align-self: end;
+        cursor: pointer;
+      }
+
+      button:disabled {
+        cursor: wait;
+      }
+
+      #search-encounter-form {
+        margin-top: 2rem;
+      }
+
+      #form-status {
+        min-height: 1.5em;
+      }
+
+      table {
+        border-collapse: collapse;
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 0.5rem;
+        text-align: left;
+      }
+
+      th {
+        background: #f1f1f1;
+      }
+
+      dt {
+        font-weight: bold;
+        text-transform: capitalize;
+      }
+
+      dd {
+        margin: 0 0 0.75rem;
+        overflow-wrap: anywhere;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Diabetes Patient Management</h1>
+      <h2>Add Patient Encounter</h2>
+      <form id="add-encounter-form">
+        <label for="encounter_id">
+          Encounter ID
+          <input id="encounter_id" name="encounter_id" type="number" min="0" step="1" required>
+          <small>Enter a unique ID; the API rejects duplicate encounter IDs.</small>
+        </label>
+        <label for="patient_nbr">
+          Patient number
+          <input id="patient_nbr" name="patient_nbr" type="number" min="0" step="1" required>
+        </label>
+        <label for="age">
+          Age band
+          <select id="age" name="age" required>
+            <option value="">Select age band</option>
+            <option value="[0-10)">0-10</option>
+            <option value="[10-20)">10-20</option>
+            <option value="[20-30)">20-30</option>
+            <option value="[30-40)">30-40</option>
+            <option value="[40-50)">40-50</option>
+            <option value="[50-60)">50-60</option>
+            <option value="[60-70)">60-70</option>
+            <option value="[70-80)">70-80</option>
+            <option value="[80-90)">80-90</option>
+            <option value="[90-100)">90-100</option>
+          </select>
+        </label>
+        <label for="time_in_hospital">
+          Days in hospital
+          <input id="time_in_hospital" name="time_in_hospital" type="number" min="0" max="32767" value="1" required>
+        </label>
+        <label for="number_inpatient">
+          Previous inpatient visits
+          <input id="number_inpatient" name="number_inpatient" type="number" min="0" value="0" required>
+        </label>
+        <label for="number_emergency">
+          Previous emergency visits
+          <input id="number_emergency" name="number_emergency" type="number" min="0" value="0" required>
+        </label>
+        <label for="number_outpatient">
+          Previous outpatient visits
+          <input id="number_outpatient" name="number_outpatient" type="number" min="0" value="0" required>
+        </label>
+        <label for="num_medications">
+          Number of medications
+          <input id="num_medications" name="num_medications" type="number" min="0" value="1" required>
+        </label>
+        <label for="num_lab_procedures">
+          Number of lab procedures
+          <input id="num_lab_procedures" name="num_lab_procedures" type="number" min="0" value="1" required>
+        </label>
+        <label for="discharge_disposition_id">
+          Discharge disposition ID
+          <input id="discharge_disposition_id" name="discharge_disposition_id" type="number" value="1" required>
+        </label>
+        <label for="admission_type_id">
+          Admission type ID
+          <input id="admission_type_id" name="admission_type_id" type="number" value="1" required>
+        </label>
+        <label for="readmitted">
+          Readmitted
+          <select id="readmitted" name="readmitted" required>
+            <option value="NO">No</option>
+            <option value=">30">After 30 days</option>
+            <option value="<30">Within 30 days</option>
+          </select>
+        </label>
+        <button type="submit" id="add-encounter-btn">Add Encounter</button>
+      </form>
+      <h2>Search encounter</h2>
+      <form id="search-encounter-form">
+        <label for="search-encounter-id">
+          Encounter ID
+          <input
+            id="search-encounter-id"
+            name="encounter_id"
+            type="number"
+            min="0"
+            step="1"
+            required
+          >
+        </label>
+        <button type="submit" id="search-encounter-btn">Search</button>
+      </form>
+      <p id="form-status" role="status" aria-live="polite"></p>
+      <section id="encounter-result" aria-live="polite"></section>
+      <section aria-labelledby="encounter-table-heading">
+        <h2 id="encounter-table-heading">Encounter records from database</h2>
+        <p id="encounter-table-status" role="status" aria-live="polite"></p>
+        <table>
+          <thead>
+            <tr>
+              <th>Encounter ID</th>
+              <th>Patient number</th>
+              <th>Age band</th>
+              <th>Days in hospital</th>
+              <th>Inpatient visits</th>
+              <th>Emergency visits</th>
+              <th>Outpatient visits</th>
+              <th>Risk score</th>
+              <th>Risk level</th>
+            </tr>
+          </thead>
+          <tbody id="encounter-table-body"></tbody>
+        </table>
+      </section>
+    </main>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
